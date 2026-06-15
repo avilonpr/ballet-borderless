@@ -259,7 +259,7 @@ export function BookingTabs() {
       </div>
 
       {/* Service cards */}
-      <div className={`grid gap-px bg-black/10 mb-16 ${currentTab.services.length >= 3 ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" : "grid-cols-1 sm:grid-cols-2"}`}>
+      <div className={`grid gap-px bg-black/10 mb-16 ${currentTab.services.length >= 3 ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" : currentTab.services.length === 2 ? "grid-cols-1 sm:grid-cols-2" : "grid-cols-1"}`}>
         {currentTab.services.map((service) => (
           <div key={service.name} className="bg-white flex flex-col">
             {/* Service image */}
