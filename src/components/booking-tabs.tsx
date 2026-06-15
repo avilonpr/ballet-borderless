@@ -30,73 +30,71 @@ interface FormState {
 
 const TABS: readonly Tab[] = [
   {
-    id: "foundations",
-    label: "Foundations",
+    id: "group-ballet",
+    label: "Group Ballet",
     services: [
       {
-        name: "Group Class — Creative & Novice",
+        name: "1.5 hour Group Zoom Ballet Classes (3-20 dancers Creative Movement to Novice)",
         description:
-          "Introductory movement vocabulary, musicality, and barre fundamentals for beginning dancers.",
+          "Live group Zoom classes covering creative movement through novice-level barre and centre work for beginning dancers.",
         price: "$7.15",
         unit: "per dancer",
         image: "/images/stage-1.jpg",
       },
       {
-        name: "Adult Beginner Group",
+        name: "1.5 hour Group Zoom Ballet Classes (3-20 dancers Intermediate to Advanced)",
         description:
-          "A welcoming, technique-first environment for adult newcomers to classical ballet.",
-        price: "$12.99",
+          "Live group Zoom classes for dancers with prior training, focusing on centre work, allegro, and advanced vocabulary.",
+        price: "$10.15",
         unit: "per dancer",
         image: "/images/stage-2.jpg",
       },
       {
-        name: "Ballet Foundations — Ages 5–7",
+        name: "1.5 hour Adult Beginner Group Zoom Classes (3 to 15 dancers)",
         description:
-          "An introduction to ballet vocabulary, posture, and basic barre work designed for young beginners.",
-        price: "$9.50",
+          "A welcoming group Zoom class for adult newcomers to classical ballet, emphasizing technique and musicality.",
+        price: "$12.99",
         unit: "per dancer",
         image: "/images/stage-3.jpg",
       },
     ],
   },
   {
-    id: "intermediate",
-    label: "Intermediate",
+    id: "private-ballet",
+    label: "Private Ballet",
     services: [
       {
-        name: "Group Class — Intermediate & Advanced",
+        name: "Private Ballet Zoom Classes (1 to 2 dancers of all levels)",
         description:
-          "Centre work, allegro, and advanced vocabulary for dancers with prior training.",
-        price: "$10.15",
+          "Personalized one-on-one or duo instruction via Zoom for dancers of any level, tailored to your goals and technique.",
+        price: "$24.90",
         unit: "per dancer",
         image: "/images/stage-4.jpg",
-      },
-      {
-        name: "Variations Coaching",
-        description:
-          "One-on-one coaching for classical and contemporary variations preparation.",
-        price: "$45.50",
-        unit: "per session",
-        image: "/images/stage-5.jpg",
       },
     ],
   },
   {
-    id: "pointe",
-    label: "Pointe",
+    id: "group-pointe",
+    label: "Group Pointe",
     services: [
       {
-        name: "Group Pointe",
+        name: "Group Pointe Zoom Classes (3 to 15 dancers Intermediate to Advanced)",
         description:
-          "Supervised pointe work in a structured group setting for eligible dancers.",
+          "Supervised group pointe work via Zoom for eligible intermediate and advanced dancers in a structured setting.",
         price: "$15.25",
         unit: "per dancer",
         image: "/images/stage-6.jpg",
       },
+    ],
+  },
+  {
+    id: "private-pointe",
+    label: "Private Pointe",
+    services: [
       {
-        name: "Private Pointe",
+        name: "Private Pointe Zoom Classes (1 to 2 dancers)",
         description:
-          "Individual pointe instruction tailored to your strength, alignment, and goals.",
+          "Individual or duo pointe instruction via Zoom, tailored to your strength, alignment, and readiness.",
         price: "$30.00",
         unit: "per dancer",
         image: "/images/stage-7.jpg",
@@ -104,32 +102,24 @@ const TABS: readonly Tab[] = [
     ],
   },
   {
-    id: "private",
-    label: "Private",
+    id: "coaching",
+    label: "Coaching",
     services: [
       {
-        name: "Private Ballet",
+        name: "1 on 1 Variations Zoom Coaching",
         description:
-          "Personalized one-on-one instruction addressing your specific technique and artistry.",
-        price: "$24.90",
-        unit: "per dancer",
-        image: "/images/stage-8.jpg",
-      },
-      {
-        name: "Variations Coaching",
-        description:
-          "Detailed coaching for audition or performance repertoire.",
+          "One-on-one coaching via Zoom for classical or contemporary variations preparation and performance refinement.",
         price: "$45.50",
         unit: "per session",
-        image: "/images/stage-9.jpg",
+        image: "/images/stage-5.jpg",
       },
       {
-        name: "Original Choreography",
+        name: "1 on 1 Original Choreography Zoom Coaching",
         description:
-          "Commission a bespoke solo or group piece crafted to your music and vision.",
+          "Commission an original solo or group piece crafted to your music and vision. $10.99 per additional session after the initial appointment.",
         price: "$100.00",
         unit: "per piece",
-        image: "/images/stage-3.jpg",
+        image: "/images/stage-8.jpg",
       },
     ],
   },
@@ -151,7 +141,7 @@ const INITIAL_FORM: FormState = {
 }
 
 export function BookingTabs() {
-  const [activeTab, setActiveTab] = useState<string>("foundations")
+  const [activeTab, setActiveTab] = useState<string>("group-ballet")
   const [form, setForm] = useState<FormState>(INITIAL_FORM)
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
@@ -252,12 +242,12 @@ export function BookingTabs() {
   return (
     <div>
       {/* Tab buttons */}
-      <div className="flex border-b border-black/20 mb-12">
+      <div className="flex overflow-x-auto whitespace-nowrap border-b border-black/20 mb-12">
         {TABS.map((tab) => (
           <button
             key={tab.id}
             onClick={() => handleTabChange(tab.id)}
-            className={`px-6 py-3 text-xs tracking-[0.2em] uppercase transition-all duration-200 ${
+            className={`flex-shrink-0 px-6 py-3 text-xs tracking-[0.2em] uppercase transition-all duration-200 ${
               activeTab === tab.id
                 ? "border-b-2 border-black text-black font-medium"
                 : "text-black/40 hover:text-black/70"
@@ -269,7 +259,7 @@ export function BookingTabs() {
       </div>
 
       {/* Service cards */}
-      <div className={`grid gap-px bg-black/10 mb-16 ${currentTab.services.length >= 3 ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3" : "grid-cols-1 md:grid-cols-2"}`}>
+      <div className={`grid gap-px bg-black/10 mb-16 ${currentTab.services.length >= 3 ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" : "grid-cols-1 sm:grid-cols-2"}`}>
         {currentTab.services.map((service) => (
           <div key={service.name} className="bg-white flex flex-col">
             {/* Service image */}
@@ -379,7 +369,7 @@ export function BookingTabs() {
           </div>
 
           {/* Experience + Age Group row */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="flex flex-col gap-2">
               <label
                 htmlFor="experienceYears"
