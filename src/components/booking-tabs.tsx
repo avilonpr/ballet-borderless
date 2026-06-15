@@ -474,7 +474,15 @@ export function BookingTabs() {
               className="mt-1 h-4 w-4 border border-black accent-black flex-shrink-0"
             />
             <span className="text-xs leading-relaxed text-black/70">
-              I agree to the Ballet Borderless terms and conditions
+              I agree to the Ballet Borderless{" "}
+              <a
+                href="/terms"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline underline-offset-4 hover:opacity-50 transition-opacity"
+              >
+                terms and conditions
+              </a>
             </span>
           </label>
 
