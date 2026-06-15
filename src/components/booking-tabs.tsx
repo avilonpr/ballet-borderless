@@ -135,6 +135,10 @@ const TABS: readonly Tab[] = [
   },
 ] as const
 
+function stripHtml(str: string): string {
+  return str.replace(/<[^>]*>/g, "")
+}
+
 const INITIAL_FORM: FormState = {
   fullName: "",
   email: "",
@@ -152,6 +156,7 @@ export function BookingTabs() {
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
+  const [honeypot, setHoneypot] = useState("")
 
   const currentTab = TABS.find((t) => t.id === activeTab) ?? TABS[0]
 
@@ -175,13 +180,39 @@ export function BookingTabs() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
+    if (honeypot) return
     setSubmitting(true)
     setSubmitError(null)
+
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRe.test(form.email)) {
+      setSubmitError("Please enter a valid email address.")
+      setSubmitting(false)
+      return
+    }
+    const expYears = Number(form.experienceYears)
+    if (expYears < 0 || expYears > 60) {
+      setSubmitError("Experience years must be between 0 and 60.")
+      setSubmitting(false)
+      return
+    }
+    if (!form.consent) {
+      setSubmitError("Please agree to the terms and conditions.")
+      setSubmitting(false)
+      return
+    }
+
+    const sanitized = {
+      ...form,
+      fullName: stripHtml(form.fullName),
+      timeOnPointe: stripHtml(form.timeOnPointe),
+    }
+
     try {
       const res = await fetch("https://formspree.io/f/xnjylyje", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify(sanitized),
       })
       if (res.ok) {
         setSubmitted(true)
@@ -270,6 +301,17 @@ export function BookingTabs() {
       <div className="max-w-2xl">
         <h2 className="font-heading text-2xl mb-8">Reserve Your Place</h2>
         <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+          {/* Honeypot — visually hidden, filled only by bots */}
+          <input
+            aria-hidden="true"
+            tabIndex={-1}
+            name="website"
+            value={honeypot}
+            onChange={(e) => setHoneypot(e.target.value)}
+            autoComplete="off"
+            className="absolute -left-[9999px] h-0 w-0 overflow-hidden"
+          />
+
           {/* Service select */}
           <div className="flex flex-col gap-2">
             <label
@@ -310,6 +352,7 @@ export function BookingTabs() {
               value={form.fullName}
               onChange={handleField}
               required
+              maxLength={100}
               placeholder="Your full name"
               className="border border-black/30 px-4 py-3 text-sm bg-white focus:outline-none focus:border-black transition-colors placeholder:text-black/30"
             />
@@ -374,6 +417,7 @@ export function BookingTabs() {
                 className="border border-black/30 px-4 py-3 text-sm bg-white focus:outline-none focus:border-black transition-colors"
               >
                 <option value="">Select</option>
+                <option value="child">Child (under 12)</option>
                 <option value="youth">Youth 12–17</option>
                 <option value="adult">Adult 18+</option>
               </select>
@@ -394,6 +438,7 @@ export function BookingTabs() {
               type="text"
               value={form.timeOnPointe}
               onChange={handleField}
+              maxLength={100}
               placeholder="e.g. 2 years, 6 months, or N/A"
               className="border border-black/30 px-4 py-3 text-sm bg-white focus:outline-none focus:border-black transition-colors placeholder:text-black/30"
             />
