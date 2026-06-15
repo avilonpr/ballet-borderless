@@ -150,6 +150,8 @@ export function BookingTabs() {
   const [activeTab, setActiveTab] = useState<string>("foundations")
   const [form, setForm] = useState<FormState>(INITIAL_FORM)
   const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
 
   const currentTab = TABS.find((t) => t.id === activeTab) ?? TABS[0]
 
@@ -171,9 +173,27 @@ export function BookingTabs() {
     }))
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    setSubmitted(true)
+    setSubmitting(true)
+    setSubmitError(null)
+    try {
+      const res = await fetch("https://formspree.io/f/xnjylyje", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(form),
+      })
+      if (res.ok) {
+        setSubmitted(true)
+      } else {
+        const data: { error?: string } = await res.json().catch(() => ({}))
+        setSubmitError(data.error ?? "Submission failed. Please try again.")
+      }
+    } catch {
+      setSubmitError("Network error. Please check your connection and try again.")
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   if (submitted) {
@@ -413,12 +433,17 @@ export function BookingTabs() {
             </span>
           </label>
 
+          {submitError && (
+            <p className="text-sm text-red-600">{submitError}</p>
+          )}
+
           {/* Submit */}
           <button
             type="submit"
-            className="mt-2 bg-black text-white text-xs tracking-[0.2em] uppercase px-8 py-4 hover:bg-black/80 transition-colors duration-200 self-start"
+            disabled={submitting}
+            className="mt-2 bg-black text-white text-xs tracking-[0.2em] uppercase px-8 py-4 hover:bg-black/80 transition-colors duration-200 self-start disabled:opacity-50"
           >
-            Reserve Your Place
+            {submitting ? "Sending…" : "Reserve Your Place"}
           </button>
         </form>
       </div>
