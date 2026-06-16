@@ -33,7 +33,7 @@ export function Navbar() {
             style={{ height: "40px", width: "auto" }}
             priority
           />
-          <span className="font-heading text-sm tracking-widest uppercase text-black">
+          <span className="hidden sm:inline font-heading text-sm tracking-widest uppercase text-black">
             Ballet Borderless
           </span>
         </Link>

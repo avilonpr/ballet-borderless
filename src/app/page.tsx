@@ -44,7 +44,7 @@ export default function HomePage() {
 
           {/* Hero word — Syne italic */}
           <h1
-            className="text-white text-[7rem] md:text-[11rem] font-light leading-none tracking-tight"
+            className="text-white text-[3.5rem] sm:text-[5.5rem] md:text-[7rem] lg:text-[11rem] font-light leading-none tracking-tight"
             style={{ fontFamily: "var(--font-syne)", fontStyle: "italic" }}
           >
             PRECISION
@@ -111,7 +111,7 @@ export default function HomePage() {
       {/* ── SERVICES ──────────────────────────────────────────────────────── */}
       <section className="border-t border-black/10 py-28">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="flex items-end justify-between mb-16">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between mb-16">
             <h2 className="font-heading text-4xl md:text-5xl italic">
               Services
             </h2>
