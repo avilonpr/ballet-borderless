@@ -34,6 +34,9 @@ export default function HomePage() {
           className="object-cover"
           priority
         />
+        <span className="absolute bottom-2 left-2 z-20 bg-white/70 text-black/70 text-[10px] tracking-wide px-2 py-0.5 rounded-full">
+          Camila Álvez
+        </span>
         {/* Gradient overlay — heavier at bottom so text above pops */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/35 to-black/60" />
 
@@ -105,6 +108,9 @@ export default function HomePage() {
               fill
               className="object-cover"
             />
+            <span className="absolute bottom-2 left-2 bg-white/70 text-black/70 text-[10px] tracking-wide px-2 py-0.5 rounded-full">
+              Romi Jao
+            </span>
           </div>
         </div>
       </section>
