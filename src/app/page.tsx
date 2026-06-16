@@ -7,18 +7,19 @@ interface Service {
   readonly price: string
   readonly unit: string
   readonly image: string
+  readonly credit?: string
 }
 
 // Hoisted outside component — static data (server-hoist-static-io)
 const SERVICES: readonly Service[] = [
-  { name: "Group Class — Creative & Novice",        price: "$7.15",   unit: "per dancer",  image: "/images/stage-1.jpg" },
-  { name: "Group Class — Intermediate & Advanced",  price: "$10.15",  unit: "per dancer",  image: "/images/stage-2.jpg" },
-  { name: "Adult Beginner Group",                   price: "$12.99",  unit: "per dancer",  image: "/images/stage-3.jpg" },
-  { name: "Private Ballet",                         price: "$24.90",  unit: "per dancer",  image: "/images/stage-4.jpg" },
-  { name: "Group Pointe",                           price: "$15.25",  unit: "per dancer",  image: "/images/stage-5.jpg" },
-  { name: "Private Pointe",                         price: "$30.00",  unit: "per dancer",  image: "/images/stage-6.jpg" },
-  { name: "Variations Coaching",                    price: "$45.50",  unit: "per session", image: "/images/stage-7.jpg" },
-  { name: "Original Choreography",                  price: "$100.00", unit: "per piece",   image: "/images/stage-8.jpg" },
+  { name: "1.5 hour Group Zoom Ballet Classes (3-20 dancers Creative Movement to Novice)", price: "$7.15",   unit: "per dancer",  image: "/images/stage-1.jpg", credit: "Camila Álvez" },
+  { name: "1.5 hour Group Zoom Ballet Classes (3-20 dancers Intermediate to Advanced)",    price: "$10.15",  unit: "per dancer",  image: "/images/stage-2.jpg", credit: "Camila Álvez" },
+  { name: "1.5 hour Adult Beginner Group Zoom Classes (3 to 15 dancers)",                  price: "$12.99",  unit: "per dancer",  image: "/images/stage-3.jpg", credit: "Estela Maldonado" },
+  { name: "Private Ballet Zoom Classes (1 to 2 dancers of all levels)",                    price: "$24.90",  unit: "per dancer",  image: "/images/stage-4.jpg", credit: "Conservatorio Ballet Concierto" },
+  { name: "Group Pointe Zoom Classes (3 to 15 dancers Intermediate to Advanced)",          price: "$15.25",  unit: "per dancer",  image: "/images/stage-5.jpg", credit: "Gabriela Ruiz" },
+  { name: "Private Pointe Zoom Classes (1 to 2 dancers)",                                  price: "$30.00",  unit: "per dancer",  image: "/images/stage-6.jpg", credit: "Gabriela Ruiz" },
+  { name: "1 on 1 Variations Zoom Coaching",                                               price: "$45.50",  unit: "per session", image: "/images/stage-7.jpg", credit: "Alana Echevarría" },
+  { name: "1 on 1 Original Choreography Zoom Coaching",                                    price: "$100.00", unit: "per piece",   image: "/images/stage-8.jpg", credit: "Carola Ricci" },
 ] as const
 
 export default function HomePage() {
@@ -133,6 +134,11 @@ export default function HomePage() {
                     fill
                     className="object-cover"
                   />
+                  {service.credit && (
+                    <span className="absolute bottom-2 left-2 bg-white/70 text-black/70 text-[10px] tracking-wide px-2 py-0.5 rounded-full">
+                      {service.credit}
+                    </span>
+                  )}
                 </div>
 
                 <div className="p-8 flex flex-col gap-4 flex-1">
