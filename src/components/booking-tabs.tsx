@@ -9,6 +9,7 @@ interface ServiceOption {
   readonly price: string
   readonly unit: string
   readonly image: string
+  readonly credit?: string
 }
 
 interface Tab {
@@ -40,6 +41,7 @@ const TABS: readonly Tab[] = [
         price: "$7.15",
         unit: "per dancer",
         image: "/images/stage-1.jpg",
+        credit: "Camila Álvez",
       },
       {
         name: "1.5 hour Group Zoom Ballet Classes (3-20 dancers Intermediate to Advanced)",
@@ -48,6 +50,7 @@ const TABS: readonly Tab[] = [
         price: "$10.15",
         unit: "per dancer",
         image: "/images/stage-2.jpg",
+        credit: "Camila Álvez",
       },
       {
         name: "1.5 hour Adult Beginner Group Zoom Classes (3 to 15 dancers)",
@@ -56,6 +59,7 @@ const TABS: readonly Tab[] = [
         price: "$12.99",
         unit: "per dancer",
         image: "/images/stage-3.jpg",
+        credit: "Estela Maldonado",
       },
     ],
   },
@@ -70,6 +74,7 @@ const TABS: readonly Tab[] = [
         price: "$24.90",
         unit: "per dancer",
         image: "/images/stage-4.jpg",
+        credit: "Conservatorio Ballet Concierto",
       },
     ],
   },
@@ -84,6 +89,7 @@ const TABS: readonly Tab[] = [
         price: "$15.25",
         unit: "per dancer",
         image: "/images/stage-6.jpg",
+        credit: "Gabriela Ruiz",
       },
     ],
   },
@@ -98,6 +104,7 @@ const TABS: readonly Tab[] = [
         price: "$30.00",
         unit: "per dancer",
         image: "/images/stage-7.jpg",
+        credit: "Alana Echevarría",
       },
     ],
   },
@@ -112,6 +119,7 @@ const TABS: readonly Tab[] = [
         price: "$45.50",
         unit: "per session",
         image: "/images/stage-5.jpg",
+        credit: "Gabriela Ruiz",
       },
       {
         name: "1 on 1 Original Choreography Zoom Coaching",
@@ -120,6 +128,7 @@ const TABS: readonly Tab[] = [
         price: "$100.00",
         unit: "per piece",
         image: "/images/stage-8.jpg",
+        credit: "Carola Ricci",
       },
     ],
   },
@@ -270,6 +279,11 @@ export function BookingTabs() {
                 fill
                 className="object-cover"
               />
+              {service.credit && (
+                <span className="absolute bottom-2 left-2 bg-white/70 text-black/70 text-[10px] tracking-wide px-2 py-0.5 rounded-full">
+                  {service.credit}
+                </span>
+              )}
             </div>
 
             {/* Service details */}
